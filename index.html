@@ -447,6 +447,43 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radiu
   $("zIn").addEventListener("click", function(){ zScale = Math.min(3, zScale + 0.5); zoomImg.style.width = (zScale * 100) + "%"; });
   $("zOut").addEventListener("click", function(){ zScale = Math.max(1, zScale - 0.5); zoomImg.style.width = (zScale * 100) + "%"; });
   $("zFit").addEventListener("click", function(){ zScale = 1; zoomImg.style.width = "100%"; });
+
+  /* ---------- pinch to zoom ---------- */
+  function touchDist(e){
+    var a = e.touches[0], b = e.touches[1];
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+  var pinchFrom = 0, pinchBase = 1;
+  zoomView.addEventListener("touchstart", function(e){
+    if (e.touches.length === 2) { pinchBase = zScale; pinchFrom = touchDist(e); }
+  }, {passive:true});
+  zoomView.addEventListener("touchmove", function(e){
+    if (e.touches.length === 2 && pinchFrom) {
+      e.preventDefault();
+      var s = pinchBase * (touchDist(e) / pinchFrom);
+      zScale = Math.min(5, Math.max(1, s));
+      zoomImg.style.width = (zScale * 100) + "%";
+    }
+  }, {passive:false});
+  zoomView.addEventListener("touchend", function(e){
+    if (e.touches.length < 2) pinchFrom = 0;
+  }, {passive:true});
+
+  /* two-finger pinch on the page opens the detail view */
+  stage.addEventListener("touchstart", function(e){
+    if (e.touches.length === 2) openZoom(current);
+  }, {passive:true});
+
+  /* double-tap toggles fit / 2x */
+  var lastTap = 0;
+  zoomImg.addEventListener("touchend", function(){
+    var now = Date.now();
+    if (now - lastTap < 280) {
+      zScale = zScale >= 2 ? 1 : 2;
+      zoomImg.style.width = (zScale * 100) + "%";
+    }
+    lastTap = now;
+  });
   zoom.addEventListener("click", function(e){ if (e.target === zoom || e.target === zoomView) zoom.classList.remove("open"); });
 
   var drag = null;
