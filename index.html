@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UFEIYA 2026 Catalogue</title>
+<meta name="description" content="Guangzhou Ufeiya Metal Products — 2026 product catalogue, 45 pages.">
+<meta name="theme-color" content="#0d0f11">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d0f11'/%3E%3Crect x='13' y='6' width='6' height='20' fill='%23f1f3f4'/%3E%3Crect x='13' y='10' width='6' height='4' fill='%23cf3a26'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0d0f11;
+  --line:rgba(255,255,255,.14);
+  --fg:#f2f4f5;
+  --dim:rgba(255,255,255,.55);
+  --red:#cf3a26;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ---------- top bar ---------- */
+.top{position:fixed;top:0;left:0;right:0;height:calc(52px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);
+  z-index:20;display:flex;align-items:center;gap:8px;padding-left:10px;padding-right:10px;background:linear-gradient(to bottom,rgba(13,15,17,.97),rgba(13,15,17,.5))}
+.brand{display:flex;align-items:center;gap:7px;flex:none;min-width:0}
+.brand svg{width:16px;height:16px;flex:none;opacity:.9}
+.brand span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav{display:flex;align-items:center;gap:2px;margin:0 auto}
+.ib{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;transition:background .15s}
+.ib:hover{background:rgba(255,255,255,.12)}
+.ib:active{background:rgba(255,255,255,.2)}
+.ib svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ib:disabled{opacity:.3;cursor:default}
+.ib:disabled:hover{background:none}
+.pageno{min-width:74px;text-align:center;font-size:12.5px;letter-spacing:.1em;color:#fff;font-variant-numeric:tabular-nums}
+.pageno span{color:var(--dim);font-size:11px}
+.tools{display:flex;align-items:center;gap:2px;flex:none;margin-left:auto}
+@media(max-width:560px){.brand{display:none}.ib{width:34px;height:34px}.pageno{min-width:58px}.nav{gap:0}.tools{gap:0}.contact-fab{height:38px;font-size:12px;padding:0 13px 0 11px}}
+
+/* ---------- pages ---------- */
+.stage{position:fixed;inset:0;padding-top:calc(52px + env(safe-area-inset-top));padding-bottom:calc(56px + env(safe-area-inset-bottom));
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.stage::-webkit-scrollbar{display:none}
+.track{display:flex;align-items:center;height:100%;width:100%}
+.slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;scroll-snap-stop:always;padding:12px}
+.slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:#fff;outline:1px solid rgba(255,255,255,.1);box-shadow:0 14px 44px rgba(0,0,0,.55);cursor:zoom-in}
+
+/* ---------- bottom ---------- */
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:6px 16px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(13,15,17,.97),rgba(13,15,17,0));z-index:20}
+.seek{display:flex;align-items:center;gap:12px}
+.seek small{font-size:11px;color:var(--dim);letter-spacing:.08em;font-variant-numeric:tabular-nums;flex:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:none;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:rgba(255,255,255,.22)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:#fff;margin-top:-5px;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-track{height:3px;background:rgba(255,255,255,.22)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radius:50%;background:#fff}
+
+/* ---------- sheets ---------- */
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(8,10,12,.72);display:none}
+.sheet.open{display:block}
+.sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:72vh;background:#14171a;border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:8px 14px calc(14px + env(safe-area-inset-bottom));overflow:auto}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 8px}
+.sheet-head b{font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.72);font-weight:600}
+.sheet-head button{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.sheet-head button:hover{background:rgba(255,255,255,.1)}
+.sheet-head svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2}
+.tgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+@media(min-width:560px){.tgrid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(min-width:900px){.tgrid{grid-template-columns:repeat(10,minmax(0,1fr))}}
+.tgrid button{padding:0;border:1px solid rgba(255,255,255,.14);background:#0d0f11;border-radius:3px;overflow:hidden;position:relative;line-height:0}
+.tgrid button:hover{border-color:rgba(255,255,255,.5)}
+.tgrid button.cur{border-color:var(--red)}
+.tgrid img{width:100%;aspect-ratio:1.414/1;object-fit:cover;object-position:top;display:block}
+.tgrid .tn{position:absolute;right:3px;bottom:2px;font-size:10px;line-height:1.5;padding:0 3px;background:rgba(0,0,0,.66);color:#fff;letter-spacing:.04em}
+
+.share-row{display:flex;gap:8px;align-items:center;padding:4px 0 6px}
+.share-row input{flex:1;min-width:0;height:44px;background:#0b0d0f;border:1px solid var(--line);color:#e8ebee;border-radius:6px;padding:0 12px;font-size:13px}
+.copy{height:44px;padding:0 16px;background:#fff;color:#121417;border-radius:6px;font-size:13px;font-weight:600;flex:none}
+.hint{font-size:12px;color:rgba(255,255,255,.45);margin:8px 0 0}
+
+
+/* ---------- contact ---------- */
+.contact-fab{position:fixed;right:14px;bottom:calc(58px + env(safe-area-inset-bottom));z-index:25;display:flex;align-items:center;gap:8px;height:42px;padding:0 15px 0 12px;
+  background:rgba(20,23,26,.92);border:1px solid rgba(255,255,255,.24);border-radius:999px;color:#fff;font-size:12.5px;letter-spacing:.04em;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);backdrop-filter:blur(6px);transition:background .15s,border-color .15s}
+.contact-fab:hover{background:#1d2126;border-color:#fff}
+.contact-fab svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:1.8;flex:none}
+.contact-list{display:grid;gap:8px;padding:6px 0 2px}
+.crow{display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 14px;background:#0b0d0f;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:#fff;transition:border-color .15s,background .15s}
+.crow:hover{border-color:rgba(255,255,255,.55);background:#101317}
+.crow > svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.8;flex:none}
+.crow b{display:block;font-size:14px;font-weight:600}
+.crow small{display:block;font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+.crow .go{margin-left:auto;font-size:12px;color:rgba(255,255,255,.45);flex:none}
+.contact-foot{font-size:12px;color:rgba(255,255,255,.42);margin:12px 2px 0;line-height:1.65}
+
+/* ---------- zoom ---------- */
+.zoom{position:fixed;inset:0;z-index:60;background:rgba(6,8,10,.97);display:none;flex-direction:column}
+.zoom.open{display:flex}
+.zoom-top{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-bottom:1px solid var(--line);flex:none}
+.zoom-top span{font-size:12px;letter-spacing:.1em;color:var(--dim)}
+.zoom-top .tools{gap:2px}
+.zoom-view{flex:1;overflow:auto;padding:10px;display:flex;justify-content:center;align-items:flex-start;-webkit-overflow-scrolling:touch}
+.zoom-view img{background:#fff;height:auto;cursor:grab}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="13" y="5" width="6" height="21" fill="#f2f4f5"/><rect x="13" y="10" width="6" height="4" fill="#cf3a26"/><rect x="8" y="25" width="16" height="3" fill="#f2f4f5"/><rect x="5" y="5" width="22" height="2" fill="#cf3a26"/></svg>
+    <span>UFEIYA · 2026</span>
+  </div>
+
+  <div class="nav">
+    <button class="ib" id="firstBtn" aria-label="First page"><svg viewBox="0 0 24 24"><path d="M6 5v14M18 5l-8 7 8 7"/></svg></button>
+    <button class="ib" id="prevBtn" aria-label="Previous page"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="pageno" id="pageno">01 <span>/ 45</span></div>
+    <button class="ib" id="nextBtn" aria-label="Next page"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="ib" id="lastBtn" aria-label="Last page"><svg viewBox="0 0 24 24"><path d="M18 5v14M6 5l8 7-8 7"/></svg></button>
+  </div>
+
+  <div class="tools">
+    <button class="ib" id="contactIcon" aria-label="Contact"><svg viewBox="0 0 24 24"><path d="M4 5c0 8 7 15 15 15l2-3-4-3-2 2c-3-2-4-3-6-6l2-2-3-4-3 2z"/></svg></button>
+    <button class="ib" id="zoomBtn" aria-label="Zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6"/><path d="M11 8v6"/></svg></button>
+    <button class="ib" id="thumbsBtn" aria-label="Thumbnails"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+    <button class="ib" id="shareBtn" aria-label="Share"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg></button>
+    <button class="ib" id="fsBtn" aria-label="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></svg></button>
+  </div>
+</div>
+
+<div class="stage" id="stage" tabindex="0" aria-label="Catalogue pages">
+  <div class="track" id="track">
+    <div class="slide"><img src="assets/page-01.jpg" alt="Catalogue page 1" loading="eager"></div>
+    <div class="slide"><img src="assets/page-02.jpg" alt="Catalogue page 2" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-03.jpg" alt="Catalogue page 3" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-04.jpg" alt="Catalogue page 4" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-05.jpg" alt="Catalogue page 5" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-06.jpg" alt="Catalogue page 6" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-07.jpg" alt="Catalogue page 7" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-08.jpg" alt="Catalogue page 8" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-09.jpg" alt="Catalogue page 9" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-10.jpg" alt="Catalogue page 10" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-11.jpg" alt="Catalogue page 11" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-12.jpg" alt="Catalogue page 12" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-13.jpg" alt="Catalogue page 13" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-14.jpg" alt="Catalogue page 14" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-15.jpg" alt="Catalogue page 15" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-16.jpg" alt="Catalogue page 16" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-17.jpg" alt="Catalogue page 17" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-18.jpg" alt="Catalogue page 18" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-19.jpg" alt="Catalogue page 19" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-20.jpg" alt="Catalogue page 20" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-21.jpg" alt="Catalogue page 21" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-22.jpg" alt="Catalogue page 22" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-23.jpg" alt="Catalogue page 23" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-24.jpg" alt="Catalogue page 24" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-25.jpg" alt="Catalogue page 25" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-26.jpg" alt="Catalogue page 26" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-27.jpg" alt="Catalogue page 27" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-28.jpg" alt="Catalogue page 28" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-29.jpg" alt="Catalogue page 29" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-30.jpg" alt="Catalogue page 30" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-31.jpg" alt="Catalogue page 31" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-32.jpg" alt="Catalogue page 32" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-33.jpg" alt="Catalogue page 33" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-34.jpg" alt="Catalogue page 34" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-35.jpg" alt="Catalogue page 35" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-36.jpg" alt="Catalogue page 36" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-37.jpg" alt="Catalogue page 37" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-38.jpg" alt="Catalogue page 38" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-39.jpg" alt="Catalogue page 39" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-40.jpg" alt="Catalogue page 40" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-41.jpg" alt="Catalogue page 41" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-42.jpg" alt="Catalogue page 42" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-43.jpg" alt="Catalogue page 43" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-44.jpg" alt="Catalogue page 44" loading="lazy"></div>
+    <div class="slide"><img src="assets/page-45.jpg" alt="Catalogue page 45" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="bottom">
+  <div class="seek">
+    <small id="seekCur">01</small>
+    <input type="range" id="seek" min="1" max="45" value="1" step="1" aria-label="Page">
+    <small>45</small>
+  </div>
+</div>
+
+<div class="sheet" id="thumbsSheet">
+  <div class="sheet-panel">
+    <div class="sheet-head">
+      <b>PAGES</b>
+      <button id="thumbsClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+    </div>
+    <div class="tgrid" id="tgrid">
+      <button data-page="1"><img src="assets/thumb-01.jpg" alt="Page 1" loading="lazy"><span class="tn">01</span></button>
+      <button data-page="2"><img src="assets/thumb-02.jpg" alt="Page 2" loading="lazy"><span class="tn">02</span></button>
+      <button data-page="3"><img src="assets/thumb-03.jpg" alt="Page 3" loading="lazy"><span class="tn">03</span></button>
+      <button data-page="4"><img src="assets/thumb-04.jpg" alt="Page 4" loading="lazy"><span class="tn">04</span></button>
+      <button data-page="5"><img src="assets/thumb-05.jpg" alt="Page 5" loading="lazy"><span class="tn">05</span></button>
+      <button data-page="6"><img src="assets/thumb-06.jpg" alt="Page 6" loading="lazy"><span class="tn">06</span></button>
+      <button data-page="7"><img src="assets/thumb-07.jpg" alt="Page 7" loading="lazy"><span class="tn">07</span></button>
+      <button data-page="8"><img src="assets/thumb-08.jpg" alt="Page 8" loading="lazy"><span class="tn">08</span></button>
+      <button data-page="9"><img src="assets/thumb-09.jpg" alt="Page 9" loading="lazy"><span class="tn">09</span></button>
+      <button data-page="10"><img src="assets/thumb-10.jpg" alt="Page 10" loading="lazy"><span class="tn">10</span></button>
+      <button data-page="11"><img src="assets/thumb-11.jpg" alt="Page 11" loading="lazy"><span class="tn">11</span></button>
+      <button data-page="12"><img src="assets/thumb-12.jpg" alt="Page 12" loading="lazy"><span class="tn">12</span></button>
+      <button data-page="13"><img src="assets/thumb-13.jpg" alt="Page 13" loading="lazy"><span class="tn">13</span></button>
+      <button data-page="14"><img src="assets/thumb-14.jpg" alt="Page 14" loading="lazy"><span class="tn">14</span></button>
+      <button data-page="15"><img src="assets/thumb-15.jpg" alt="Page 15" loading="lazy"><span class="tn">15</span></button>
+      <button data-page="16"><img src="assets/thumb-16.jpg" alt="Page 16" loading="lazy"><span class="tn">16</span></button>
+      <button data-page="17"><img src="assets/thumb-17.jpg" alt="Page 17" loading="lazy"><span class="tn">17</span></button>
+      <button data-page="18"><img src="assets/thumb-18.jpg" alt="Page 18" loading="lazy"><span class="tn">18</span></button>
+      <button data-page="19"><img src="assets/thumb-19.jpg" alt="Page 19" loading="lazy"><span class="tn">19</span></button>
+      <button data-page="20"><img src="assets/thumb-20.jpg" alt="Page 20" loading="lazy"><span class="tn">20</span></button>
+      <button data-page="21"><img src="assets/thumb-21.jpg" alt="Page 21" loading="lazy"><span class="tn">21</span></button>
+      <button data-page="22"><img src="assets/thumb-22.jpg" alt="Page 22" loading="lazy"><span class="tn">22</span></button>
+      <button data-page="23"><img src="assets/thumb-23.jpg" alt="Page 23" loading="lazy"><span class="tn">23</span></button>
+      <button data-page="24"><img src="assets/thumb-24.jpg" alt="Page 24" loading="lazy"><span class="tn">24</span></button>
+      <button data-page="25"><img src="assets/thumb-25.jpg" alt="Page 25" loading="lazy"><span class="tn">25</span></button>
+      <button data-page="26"><img src="assets/thumb-26.jpg" alt="Page 26" loading="lazy"><span class="tn">26</span></button>
+      <button data-page="27"><img src="assets/thumb-27.jpg" alt="Page 27" loading="lazy"><span class="tn">27</span></button>
+      <button data-page="28"><img src="assets/thumb-28.jpg" alt="Page 28" loading="lazy"><span class="tn">28</span></button>
+      <button data-page="29"><img src="assets/thumb-29.jpg" alt="Page 29" loading="lazy"><span class="tn">29</span></button>
+      <button data-page="30"><img src="assets/thumb-30.jpg" alt="Page 30" loading="lazy"><span class="tn">30</span></button>
+      <button data-page="31"><img src="assets/thumb-31.jpg" alt="Page 31" loading="lazy"><span class="tn">31</span></button>
+      <button data-page="32"><img src="assets/thumb-32.jpg" alt="Page 32" loading="lazy"><span class="tn">32</span></button>
+      <button data-page="33"><img src="assets/thumb-33.jpg" alt="Page 33" loading="lazy"><span class="tn">33</span></button>
+      <button data-page="34"><img src="assets/thumb-34.jpg" alt="Page 34" loading="lazy"><span class="tn">34</span></button>
+      <button data-page="35"><img src="assets/thumb-35.jpg" alt="Page 35" loading="lazy"><span class="tn">35</span></button>
+      <button data-page="36"><img src="assets/thumb-36.jpg" alt="Page 36" loading="lazy"><span class="tn">36</span></button>
+      <button data-page="37"><img src="assets/thumb-37.jpg" alt="Page 37" loading="lazy"><span class="tn">37</span></button>
+      <button data-page="38"><img src="assets/thumb-38.jpg" alt="Page 38" loading="lazy"><span class="tn">38</span></button>
+      <button data-page="39"><img src="assets/thumb-39.jpg" alt="Page 39" loading="lazy"><span class="tn">39</span></button>
+      <button data-page="40"><img src="assets/thumb-40.jpg" alt="Page 40" loading="lazy"><span class="tn">40</span></button>
+      <button data-page="41"><img src="assets/thumb-41.jpg" alt="Page 41" loading="lazy"><span class="tn">41</span></button>
+      <button data-page="42"><img src="assets/thumb-42.jpg" alt="Page 42" loading="lazy"><span class="tn">42</span></button>
+      <button data-page="43"><img src="assets/thumb-43.jpg" alt="Page 43" loading="lazy"><span class="tn">43</span></button>
+      <button data-page="44"><img src="assets/thumb-44.jpg" alt="Page 44" loading="lazy"><span class="tn">44</span></button>
+      <button data-page="45"><img src="assets/thumb-45.jpg" alt="Page 45" loading="lazy"><span class="tn">45</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="shareSheet">
+  <div class="sheet-panel">
+    <div class="sheet-head">
+      <b>SHARE</b>
+      <button id="shareClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+    </div>
+    <div class="share-row">
+      <input id="shareUrl" readonly>
+      <button class="copy" id="copyBtn">Copy</button>
+    </div>
+    <p class="hint" id="shareHint">Paste this link into WhatsApp, email or your website — it opens on any phone or computer.</p>
+  </div>
+</div>
+
+
+<button class="contact-fab" id="contactFab">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5c0 8 7 15 15 15l2-3-4-3-2 2c-3-2-4-3-6-6l2-2-3-4-3 2z"/></svg>
+  <span>Contact</span>
+</button>
+
+<div class="sheet" id="contactSheet">
+  <div class="sheet-panel">
+    <div class="sheet-head">
+      <b>CONTACT UFEIYA</b>
+      <button id="contactClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+    </div>
+    <div class="contact-list">
+      <a class="crow" href="https://wa.me/8613527739230" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-4-7.4"/><path d="M21 3l-6 6"/></svg>
+        <span><b>WhatsApp</b><small>+86 135 2773 9230</small></span>
+        <span class="go">Chat</span>
+      </a>
+      <a class="crow" href="mailto:sales@ufeiya.com.cn?subject=Catalogue%20enquiry">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg>
+        <span><b>Email</b><small>sales@ufeiya.com.cn</small></span>
+        <span class="go">Write</span>
+      </a>
+      <a class="crow" href="tel:+862039120015">
+        <svg viewBox="0 0 24 24"><path d="M4 5c0 8 7 15 15 15l2-3-4-3-2 2c-3-2-4-3-6-6l2-2-3-4-3 2z"/></svg>
+        <span><b>Call the factory</b><small>+86 020-3912 0015</small></span>
+        <span class="go">Dial</span>
+      </a>
+    </div>
+    <p class="contact-foot">Industrial Road No.12-101, Xishan Village, Hualong Town, Panyu District, Guangzhou 511434, China<br>Quote the page number and item code and we reply with price, MOQ and lead time.</p>
+  </div>
+</div>
+
+<div class="zoom" id="zoom">
+  <div class="zoom-top">
+    <span id="zoomLabel">P.01</span>
+    <div class="tools">
+      <button class="ib" id="zOut" aria-label="Zoom out"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6"/></svg></button>
+      <button class="ib" id="zIn" aria-label="Zoom in"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/><path d="M8 11h6"/><path d="M11 8v6"/></svg></button>
+      <button class="ib" id="zFit" aria-label="Fit"><svg viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></svg></button>
+      <button class="ib" id="zClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+    </div>
+  </div>
+  <div class="zoom-view" id="zoomView"><img id="zoomImg" src="assets/page-01.jpg" alt="Page zoom"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var TOTAL = 45;
+  var $ = function(id){ return document.getElementById(id); };
+  var stage = $("stage"), track = $("track");
+  var slides = Array.prototype.slice.call(track.querySelectorAll("img"));
+  var pageno = $("pageno"), seek = $("seek"), seekCur = $("seekCur");
+  var prevBtn = $("prevBtn"), nextBtn = $("nextBtn");
+  var zoom = $("zoom"), zoomImg = $("zoomImg"), zoomView = $("zoomView"), zoomLabel = $("zoomLabel");
+  var zScale = 1, current = 1;
+
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+
+  function update(page){
+    current = page;
+    pageno.innerHTML = pad(page) + " <span>/ " + TOTAL + "</span>";
+    seek.value = page;
+    seekCur.textContent = pad(page);
+    prevBtn.disabled = page <= 1;
+    nextBtn.disabled = page >= TOTAL;
+    $("firstBtn").disabled = page <= 1;
+    $("lastBtn").disabled = page >= TOTAL;
+    Array.prototype.forEach.call($("tgrid").children, function(b, i){
+      b.classList.toggle("cur", i + 1 === page);
+    });
+  }
+
+  function goTo(page){
+    page = Math.max(1, Math.min(TOTAL, page));
+    var stageRect = stage.getBoundingClientRect();
+    var r = slides[page - 1].parentElement.getBoundingClientRect();
+    stage.scrollLeft = stage.scrollLeft + (r.left - stageRect.left);
+    update(page);
+  }
+
+  function nearest(){
+    var centre = stage.getBoundingClientRect().left + stage.clientWidth / 2;
+    var best = 1, bestD = Infinity;
+    for (var i = 0; i < slides.length; i++) {
+      var r = slides[i].parentElement.getBoundingClientRect();
+      var d = Math.abs(r.left + r.width / 2 - centre);
+      if (d < bestD) { bestD = d; best = i + 1; }
+    }
+    return best;
+  }
+
+  var t = null;
+  stage.addEventListener("scroll", function(){
+    if (t) clearTimeout(t);
+    t = setTimeout(function(){
+      var p = nearest();
+      if (p !== current) update(p);
+    }, 70);
+  }, { passive: true });
+
+  prevBtn.addEventListener("click", function(){ goTo(current - 1); });
+  nextBtn.addEventListener("click", function(){ goTo(current + 1); });
+  $("firstBtn").addEventListener("click", function(){ goTo(1); });
+  $("lastBtn").addEventListener("click", function(){ goTo(TOTAL); });
+  seek.addEventListener("input", function(){ goTo(parseInt(seek.value, 10)); });
+
+  function closeSheets(){
+    $("thumbsSheet").classList.remove("open");
+    $("shareSheet").classList.remove("open");
+    $("contactSheet").classList.remove("open");
+  }
+  function openSheet(el){ closeSheets(); el.classList.add("open"); }
+
+  document.addEventListener("keydown", function(e){
+    if (zoom.classList.contains("open")) { if (e.key === "Escape") zoom.classList.remove("open"); return; }
+    if (e.key === "Escape") { closeSheets(); return; }
+    if ($("thumbsSheet").classList.contains("open") || $("shareSheet").classList.contains("open") || $("contactSheet").classList.contains("open")) return;
+    if (e.key === "ArrowRight") goTo(current + 1);
+    if (e.key === "ArrowLeft") goTo(current - 1);
+  });
+
+  $("thumbsBtn").addEventListener("click", function(){ openSheet($("thumbsSheet")); });
+  $("thumbsClose").addEventListener("click", closeSheets);
+  $("shareBtn").addEventListener("click", function(){
+    $("shareUrl").value = location.href.split("#")[0];
+    openSheet($("shareSheet"));
+  });
+  $("shareClose").addEventListener("click", closeSheets);
+  $("contactIcon").addEventListener("click", function(){ openSheet($("contactSheet")); });
+  $("contactFab").addEventListener("click", function(){ openSheet($("contactSheet")); });
+  $("contactClose").addEventListener("click", closeSheets);
+  [$("thumbsSheet"), $("shareSheet"), $("contactSheet")].forEach(function(sheet){
+    sheet.addEventListener("click", function(e){ if (e.target === sheet) closeSheets(); });
+  });
+  $("tgrid").addEventListener("click", function(e){
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    goTo(parseInt(btn.dataset.page, 10));
+    closeSheets();
+  });
+  $("copyBtn").addEventListener("click", function(){
+    var url = $("shareUrl").value;
+    var done = function(){
+      $("copyBtn").textContent = "Copied";
+      $("shareHint").textContent = "Link copied — paste it into WhatsApp, email or your website.";
+      setTimeout(function(){ $("copyBtn").textContent = "Copy"; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function(){ $("shareUrl").select(); document.execCommand("copy"); done(); });
+    } else {
+      $("shareUrl").select(); document.execCommand("copy"); done();
+    }
+  });
+
+  $("fsBtn").addEventListener("click", function(){
+    var el = document.documentElement;
+    if (!document.fullscreenElement && el.requestFullscreen) { el.requestFullscreen().catch(function(){}); }
+    else if (document.exitFullscreen) { document.exitFullscreen().catch(function(){}); }
+  });
+
+  function openZoom(page){
+    current = page;
+    zoomImg.src = slides[page - 1].getAttribute("src");
+    zScale = 1;
+    zoomImg.style.width = "100%";
+    zoom.classList.add("open");
+    zoomLabel.textContent = "P." + pad(page) + " / " + TOTAL;
+    setTimeout(function(){ zoomView.scrollTop = 0; zoomView.scrollLeft = 0; }, 30);
+  }
+  $("zoomBtn").addEventListener("click", function(){ openZoom(current); });
+  slides.forEach(function(img, i){ img.addEventListener("click", function(){ openZoom(i + 1); }); });
+  $("zClose").addEventListener("click", function(){ zoom.classList.remove("open"); });
+  $("zIn").addEventListener("click", function(){ zScale = Math.min(3, zScale + 0.5); zoomImg.style.width = (zScale * 100) + "%"; });
+  $("zOut").addEventListener("click", function(){ zScale = Math.max(1, zScale - 0.5); zoomImg.style.width = (zScale * 100) + "%"; });
+  $("zFit").addEventListener("click", function(){ zScale = 1; zoomImg.style.width = "100%"; });
+  zoom.addEventListener("click", function(e){ if (e.target === zoom || e.target === zoomView) zoom.classList.remove("open"); });
+
+  var drag = null;
+  zoomView.addEventListener("pointerdown", function(e){
+    if (e.target !== zoomImg) return;
+    drag = { x: e.clientX, y: e.clientY, l: zoomView.scrollLeft, t: zoomView.scrollTop };
+    zoomImg.style.cursor = "grabbing";
+  });
+  window.addEventListener("pointermove", function(e){
+    if (!drag) return;
+    zoomView.scrollLeft = drag.l - (e.clientX - drag.x);
+    zoomView.scrollTop = drag.t - (e.clientY - drag.y);
+  });
+  window.addEventListener("pointerup", function(){
+    drag = null; zoomImg.style.cursor = "grab";
+  });
+
+  update(1);
+})();
+</script>
+</body>
+</html>
