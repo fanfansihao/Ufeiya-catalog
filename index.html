@@ -322,13 +322,13 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radiu
      link= 客户拿到的链接在末尾加 ?rep=名字，例如 .../?rep=mandy  */
   var REPS = {
     "default": { name: "UFEIYA", wa: "8613527739230", email: "sales@ufeiya.com.cn", tel: "+862039120015" },
-    "mandy":   { name: "MANDY",  wa: "8613527739230", email: "mandy@ufeiya-metal.com", tel: "+862039120015" }
+    "mandy":   { name: "MANDY",  wa: "8613527739230", email: "mandy@ufeiya-metal.com", tel: "+862039120015" },
     "kelly":   { name: "KELLY",  wa: "8615992063361", email: "sales2@ufeiya.com.cn", tel: "+8615992063361" }
   };
 
   function applyRep(){
-    var key = "";
-    try { key = (new URLSearchParams(location.search).get("rep") || "").toLowerCase(); } catch(e){}
+    var key = typeof versionRep === "string" && versionRep ? versionRep : "";
+    if (!key) { try { key = (new URLSearchParams(location.search).get("rep") || "").toLowerCase(); } catch(e){} }
     var r = REPS[key] || REPS["default"];
     if (!r) return;
     $("repName").textContent = r.name;
@@ -342,6 +342,67 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radiu
 
   function pad(n){ return (n < 10 ? "0" : "") + n; }
 
+  /* ========== 版本配置：一条链接 = 一个业务员 + 一组页面 ==========
+     key 就是链接里 ?v= 后面的名字
+     rep 指向下方 REPS 里的业务员
+     pages 填要显示的原始页码（1-45），null 表示整本 45 页
+     例："eu": { rep: "mandy", pages: [1,2,3,6,7,8,14,15,18,19,20] } */
+  var VERSIONS = {
+    "default": { rep: "default", pages: null },
+    "mandy":   { rep: "mandy",   pages: null },
+    "kelly":   { rep: "kelly",   pages: null, replace: { "1": "assets/page-01-kelly.jpg" } }
+  };
+
+  function applyVersion(){
+    var key = "";
+    try { key = (new URLSearchParams(location.search).get("v") || "").toLowerCase(); } catch(e){}
+    var cfg = VERSIONS[key];
+    if (!cfg) return;
+
+    var touched = false;
+
+    /* 1) 单页换图：replace 里写 { 页码: "图片路径" } */
+    if (cfg.replace) {
+      Object.keys(cfg.replace).forEach(function(k){
+        var img = slides[parseInt(k, 10) - 1];
+        if (!img) return;
+        img.src = cfg.replace[k];
+        img.setAttribute("data-thumb", cfg.replace[k]);
+        touched = true;
+      });
+    }
+
+    /* 2) 只保留指定页并按给定顺序排列 */
+    if (cfg.pages) {
+      var keep = cfg.pages.filter(function(p){ return p >= 1 && p <= slides.length; });
+      if (keep.length) {
+        var all = slides.map(function(img){ return img.parentElement; });
+        var wanted = keep.map(function(p){ return all[p - 1]; });
+        wanted.forEach(function(el){ track.appendChild(el); });
+        all.forEach(function(el){ if (wanted.indexOf(el) === -1 && el.parentElement) el.parentElement.removeChild(el); });
+        slides = wanted.map(function(el){ return el.querySelector("img"); });
+        TOTAL = slides.length;
+        if (seek) seek.max = TOTAL;
+        touched = true;
+      }
+    }
+
+    /* 3) 缩略图按最终顺序重建 */
+    if (touched) {
+      var grid = $("tgrid");
+      grid.innerHTML = "";
+      slides.forEach(function(img, i){
+        var thumbSrc = img.getAttribute("data-thumb") || img.getAttribute("src").replace("page-", "thumb-");
+        var b = document.createElement("button");
+        b.innerHTML = '<img src="' + thumbSrc + '" alt="Page ' + (i + 1) + '" loading="lazy"><span class="tn">' + (i + 1) + '</span>';
+        grid.appendChild(b);
+      });
+    }
+    return cfg.rep;
+  }
+
+  var versionRep = applyVersion();
+
   var warmed = {};
   function prefetch(page){
     [page + 1, page + 2, page - 1].forEach(function(n){
@@ -349,7 +410,8 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;border-radiu
       warmed[n] = 1;
       var im = new Image();
       im.decoding = "async";
-      im.src = "assets/page-" + pad(n) + ".jpg";
+      if (!slides[n - 1]) return;
+      im.src = slides[n - 1].getAttribute("src");
     });
   }
 
